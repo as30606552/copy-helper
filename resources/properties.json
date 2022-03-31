@@ -1,0 +1,11 @@
+{
+  "rows": {
+    "height": 40,
+    "spacing": 6,
+    "critical_value_size": 30
+  },
+  "font": {
+    "size": 14
+  },
+  "mode": "columns"
+}
