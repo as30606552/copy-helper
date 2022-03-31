@@ -29,7 +29,7 @@ class _Window:
 
     def show(self):
         self.__widget.move(0, 0)
-        self.__widget.setFixedHeight(self.__widget.height())
+        self.__widget.setFixedHeight(self.__widget.sizeHint().height())
         self.__widget.show()
 
     def _vertical_layout(self) -> QVBoxLayout:
@@ -56,7 +56,7 @@ class _Window:
         button = QPushButton(text, self.__widget)
         self.__init_widget(button, len(text))
         # noinspection PyUnresolvedReferences
-        button.clicked.connect(lambda: _app.clipboard().setText(text))
+        button.clicked.connect(lambda: _app.clipboard().setText(text.replace('\n', ' ')))
         return button
 
     def _set_layout(self, layout: QLayout):
@@ -70,7 +70,7 @@ class _Window:
         font = widget.font()
         font.setPointSize(self.__font_size - value_size // self.__critical_value_size)
         widget.setFont(font)
-        widget.setFixedHeight(self.__row_height)
+        widget.setFixedHeight(max(self.__row_height, widget.sizeHint().height()))
 
 
 class ColumnsWindow(_Window):
