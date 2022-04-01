@@ -12,7 +12,8 @@ def _parse_json(filename: str, schema: dict) -> dict:
             return result
         except ValidationError as error:
             message = error.message
-            path = '["' + '"]["'.join(error.path) + '"]'
+            path_strs = map(lambda elem: f'"{elem}"' if isinstance(elem, str) else str(elem), error.path)
+            path = f'[{"][".join(path_strs)}]'
             raise Exception(f'Error reading {filename}.json: {message} (path: {path})') from error
 
 
