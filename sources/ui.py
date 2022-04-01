@@ -2,7 +2,8 @@ import sys
 from typing import Optional
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QLayout, QGridLayout, QLabel, QPushButton
+from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QLayout, QLabel, QPushButton, \
+    QScrollArea, QFormLayout
 
 _app: Optional[QApplication] = None
 
@@ -21,16 +22,35 @@ class _Window:
 
     def __init__(self, title: str, spacing: int, row_height: int, font_size: int, critical_value_size: int):
         self.__widget = QWidget()
-        self.__widget.setWindowTitle(title)
+        self.__window = self.__widget
+        self.__window.setWindowTitle(title)
         self.__spacing = spacing
         self.__row_height = row_height
         self.__font_size = font_size
         self.__critical_value_size = critical_value_size
 
     def show(self):
-        self.__widget.move(0, 0)
-        self.__widget.setFixedHeight(self.__widget.sizeHint().height())
-        self.__widget.show()
+        size = self.__widget.sizeHint()
+        desktop_height = _app.desktop().availableGeometry().height()
+
+        if size.height() > desktop_height:
+            scroll = QScrollArea()
+            scroll.setWidget(self.__widget)
+            scroll.setWidgetResizable(True)
+            scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+            scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+            scroll.setWindowTitle(self.__widget.windowTitle())
+
+            self.__window = scroll
+            self.__window.setMaximumHeight(desktop_height)
+            self.__window.resize(size.width(), desktop_height)
+            self.__window.setMinimumWidth(size.width() + scroll.verticalScrollBar().width())
+        else:
+            self.__window.setFixedHeight(size.height())
+            self.__window.setMinimumWidth(size.width())
+
+        self.__window.move(0, 0)
+        self.__window.show()
 
     def _vertical_layout(self) -> QVBoxLayout:
         layout = QVBoxLayout()
@@ -42,8 +62,8 @@ class _Window:
         self.__init_layout(layout)
         return layout
 
-    def _grid_layout(self) -> QGridLayout:
-        layout = QGridLayout()
+    def _form_layout(self) -> QFormLayout:
+        layout = QFormLayout()
         self.__init_layout(layout)
         return layout
 
@@ -97,11 +117,8 @@ class RowsWindow(_Window):
 
     def __init__(self, title: str, spacing: int, row_height: int, font_size: int, critical_value_size: int):
         super().__init__(title, spacing, row_height, font_size, critical_value_size)
-        self.__main_layout = self._grid_layout()
+        self.__main_layout = self._form_layout()
         self._set_layout(self.__main_layout)
-        self.__last_entry_index = 0
 
     def add_entry(self, name: str, value: str):
-        self.__main_layout.addWidget(self._label(name), self.__last_entry_index, 0)
-        self.__main_layout.addWidget(self._copy_button(value), self.__last_entry_index, 1)
-        self.__last_entry_index += 1
+        self.__main_layout.addRow(self._label(name), self._copy_button(value))
