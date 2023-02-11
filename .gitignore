@@ -1,2 +1,6 @@
-/venv/
-/.idea/
+# Editor
+/.idea
+/.fleet
+
+# Target
+/venv

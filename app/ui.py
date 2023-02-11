@@ -1,11 +1,10 @@
 import sys
-from typing import Optional
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QLayout, QLabel, QPushButton, \
     QScrollArea, QFormLayout
 
-_app: Optional[QApplication] = None
+_app: QApplication | None = None
 
 
 def init_app():
@@ -15,6 +14,9 @@ def init_app():
 
 def start_app():
     global _app
+    if _app is None:
+        raise Exception('Must initialize app first')
+    print('Application started')
     sys.exit(_app.exec())
 
 

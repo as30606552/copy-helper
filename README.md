@@ -22,17 +22,17 @@ A program with a UI for fast text copying.
 
 1. Install the python interpreter from the [official website](https://www.python.org/).
 2. Install the PyQt5 package:
-  ```shell
-  pip install pyqt5
-  ```
+   ```shell
+   pip install pyqt5
+   ```
 3. Install the jsonschema package:
-  ```shell
-  pip install jsonschema
-  ```
-4. Launch the application in the *sources* directory:
-  ```shell
-  python main.py
-  ```
+   ```shell
+   pip install jsonschema
+   ```
+4. Launch the application in its directory:
+   ```shell
+   python app
+   ```
 
 ## Feedback
 

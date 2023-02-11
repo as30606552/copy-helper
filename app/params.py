@@ -1,20 +1,20 @@
-import json
-
 import jsonschema
 from jsonschema.exceptions import ValidationError
 
 
-def _parse_json(filename: str, schema: dict) -> dict:
-    with open(f'../resources/{filename}.json', encoding='utf-8') as file:
-        result = json.load(file)
-        try:
-            jsonschema.validate(result, schema)
-            return result
-        except ValidationError as error:
-            message = error.message
-            path_strs = map(lambda elem: f'"{elem}"' if isinstance(elem, str) else str(elem), error.path)
-            path = f'[{"][".join(path_strs)}]'
-            raise Exception(f'Error reading {filename}.json: {message} (path: {path})') from error
+class PropertiesError(Exception):
+    ...
+
+
+def _parse_json(data: dict, schema: dict) -> dict:
+    try:
+        jsonschema.validate(data, schema)
+        return data
+    except ValidationError as error:
+        message = error.message
+        path_strs = map(lambda elem: f'"{elem}"' if isinstance(elem, str) else str(elem), error.path)
+        path = f'[{"][".join(path_strs)}]'
+        raise PropertiesError(f'{message} (path: {path})') from error
 
 
 class Properties:
@@ -37,7 +37,8 @@ class Properties:
                         'minimum': 1
                     }
                 },
-                'required': ['height', 'spacing']
+                'required': ['height', 'spacing'],
+                'additionalProperties': False
             },
             'font': {
                 'type': 'object',
@@ -47,18 +48,20 @@ class Properties:
                         'minimum': 1
                     }
                 },
-                'required': ['size']
+                'required': ['size'],
+                'additionalProperties': False
             },
             'mode': {
                 'type': 'string',
                 'enum': ['columns', 'rows']
             }
         },
-        'required': ['rows', 'font', 'mode']
+        'required': ['rows', 'font', 'mode'],
+        'additionalProperties': False
     }
 
-    def __init__(self):
-        self.__props_data = _parse_json('properties', self.__props_schema)
+    def __init__(self, data: dict):
+        self.__props_data = _parse_json(data, self.__props_schema)
 
     @property
     def row_height(self) -> int:
@@ -89,11 +92,12 @@ class Messages:
                 'type': 'string'
             }
         },
-        'required': ['main_window_caption']
+        'required': ['main_window_caption'],
+        'additionalProperties': False
     }
 
-    def __init__(self):
-        self.__msgs_data = _parse_json('messages', self.__msgs_schema)
+    def __init__(self, data: dict):
+        self.__msgs_data = _parse_json(data, self.__msgs_schema)
 
     def __getitem__(self, key: str) -> str:
         return self.__msgs_data[key]
@@ -157,18 +161,20 @@ class Data:
                                 'type': 'string'
                             }
                         },
-                        'required': ['name', 'value']
+                        'required': ['name', 'value'],
+                        'additionalProperties': False
                     },
                     'minItems': 1
                 }
             },
-            'required': ['name', 'data']
+            'required': ['name', 'data'],
+            'additionalProperties': False
         },
         'minItems': 1
     }
 
-    def __init__(self):
-        self.__data = _parse_json('data', self.__data_schema)
+    def __init__(self, data: dict):
+        self.__data = _parse_json(data, self.__data_schema)
 
     def __getitem__(self, index: int) -> DataGroup:
         return DataGroup(self.__data[index])
