@@ -1,9 +1,14 @@
+import ctypes
 import sys
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QLayout, QLabel, QPushButton, \
     QScrollArea, QFormLayout
+
+# Enable the icon on windows
+if hasattr(ctypes, 'windll'):
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID('as30606552.py-copy-helper')
 
 _app: QApplication | None = None
 
