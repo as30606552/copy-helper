@@ -9,7 +9,7 @@ def _load_file(directory: str, filename: str) -> dict:
         return json.load(file)
 
 
-def create_columns_window(props: Properties, msgs: Messages, data: Data):
+def create_columns_window(props: Properties, msgs: Messages, data: Data) -> ColumnsWindow:
     window = ColumnsWindow(
         msgs.main_window_caption,
         props.rows_spacing,
@@ -22,9 +22,10 @@ def create_columns_window(props: Properties, msgs: Messages, data: Data):
         for row in column:
             window.add_entry(i, row.value)
     window.show()
+    return window
 
 
-def create_rows_window(props: Properties, msgs: Messages, data: Data):
+def create_rows_window(props: Properties, msgs: Messages, data: Data) -> RowsWindow:
     window = RowsWindow(
         msgs.main_window_caption,
         props.rows_spacing,
@@ -36,6 +37,11 @@ def create_rows_window(props: Properties, msgs: Messages, data: Data):
         for row in column:
             window.add_entry(row.name, row.value)
     window.show()
+    return window
+
+
+# Need to store the main window in this global variable not to remove it from the function scope
+main_window: ColumnsWindow | RowsWindow | None = None
 
 
 def main(resources_dir: str):
@@ -43,12 +49,13 @@ def main(resources_dir: str):
     msgs = Messages(_load_file(resources_dir, 'messages'))
     data = Data(_load_file(resources_dir, 'data'))
 
-    init_app()
+    init_app(f'{resources_dir}/icon.svg')
 
+    global main_window
     if props.mode == 'columns':
-        create_columns_window(props, msgs, data)
+        main_window = create_columns_window(props, msgs, data)
     elif props.mode == 'rows':
-        create_rows_window(props, msgs, data)
+        main_window = create_rows_window(props, msgs, data)
 
     start_app()
 

@@ -1,116 +1,52 @@
 [
   {
-    "name": "Заявитель",
+    "name": "Group 1",
     "data": [
       {
-        "name": "Фамилия заявителя",
-        "value": "<value>"
+        "name": "Field 1",
+        "value": "Value 1"
       },
       {
-        "name": "Имя заявителя",
-        "value": "<value>"
+        "name": "Field 2",
+        "value": "Value 2"
       },
       {
-        "name": "Отчество заявителя",
-        "value": "<value>"
+        "name": "Field 3",
+        "value": "Value 3"
       },
       {
-        "name": "Дата рождения заявителя",
-        "value": "<value>"
-      },
-      {
-        "name": "Серия паспорта",
-        "value": "<value>"
-      },
-      {
-        "name": "Номер паспорта",
-        "value": "<value>"
-      },
-      {
-        "name": "Кем выдан паспорт",
-        "value": "<value>"
-      },
-      {
-        "name": "Дата выдачи паспорта",
-        "value": "<value>"
-      },
-      {
-        "name": "Код подразделения",
-        "value": "<value>"
-      },
-      {
-        "name": "Телефон",
-        "value": "<value>"
+        "name": "Field 4",
+        "value": "Value 4"
       }
     ]
   },
   {
-    "name": "Адрес",
+    "name": "Group 2",
     "data": [
       {
-        "name": "Регион",
-        "value": "<value>"
+        "name": "Field 5",
+        "value": "Value 5"
       },
       {
-        "name": "Город",
-        "value": "<value>"
-      },
-      {
-        "name": "Улица",
-        "value": "<value>"
-      },
-      {
-        "name": "Дом",
-        "value": "<value>"
-      },
-      {
-        "name": "Квартира",
-        "value": "<value>"
+        "name": "Field 6",
+        "value": "Value 6"
       }
     ]
   },
   {
-    "name": "Ребенок",
+    "name": "Group 3",
     "data": [
       {
-        "name": "Фамилия ребенка",
-        "value": "<value>"
+        "name": "Field 7",
+        "value": "Value 7"
       },
       {
-        "name": "Имя ребенка",
-        "value": "<value>"
+        "name": "Field 8",
+        "value": "Value 8"
       },
       {
-        "name": "Отчество ребенка",
-        "value": "<value>"
-      },
-      {
-        "name": "Дата рождения ребенка",
-        "value": "<value>"
-      },
-      {
-        "name": "Место рождения ребенка",
-        "value": "<value>"
-      },
-      {
-        "name": "Серия свидетельства",
-        "value": "<value>"
-      },
-      {
-        "name": "Номер свидетельства",
-        "value": "<value>"
-      },
-      {
-        "name": "Кем выдано свидетельство",
-        "value": "<value>"
-      },
-      {
-        "name": "Дата выдачи свидетельства",
-        "value": "<value>"
-      },
-      {
-        "name": "Номер актовой записи",
-        "value": "<value>"
+        "name": "Field 9",
+        "value": "Value 9"
       }
     ]
   }

@@ -1,15 +1,17 @@
 import sys
 
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QLayout, QLabel, QPushButton, \
     QScrollArea, QFormLayout
 
 _app: QApplication | None = None
 
 
-def init_app():
+def init_app(icon_path: str):
     global _app
     _app = QApplication(sys.argv)
+    _app.setWindowIcon(QIcon(icon_path))
 
 
 def start_app():
